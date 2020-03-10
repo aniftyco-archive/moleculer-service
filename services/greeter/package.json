@@ -1,0 +1,12 @@
+{
+  "name": "greeter",
+  "version": "0.0.0",
+  "main": "dist/GreeterService.js",
+  "scripts": {
+    "start": "moleculer-runner --envfile ../../.env dist/*Service.js",
+    "build": "tsc --build tsconfig.json"
+  },
+  "dependencies": {
+    "moleculer": "^0.14.4"
+  }
+}
