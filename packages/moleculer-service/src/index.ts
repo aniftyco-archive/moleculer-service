@@ -1,5 +1,2 @@
-import Moleculer from './moleculer';
-
 export * from './decorators';
-
-export { Moleculer };
+export * from './moleculer';

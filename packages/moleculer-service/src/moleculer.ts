@@ -6,7 +6,7 @@ import {
   ServiceSettingSchema,
 } from 'moleculer';
 
-export default abstract class Moleculer extends MoleculerService {
+export class Moleculer extends MoleculerService {
   public settings: ServiceSettingSchema = {};
   public dependencies: string | ServiceDependency | Array<string | ServiceDependency> = [];
   public metadata: GenericObject = {};

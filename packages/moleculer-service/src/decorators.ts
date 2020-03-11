@@ -1,6 +1,7 @@
 import 'reflect-metadata';
-import { ActionSchema, EventSchema, ServiceBroker } from 'moleculer';
+import { ActionSchema, EventSchema } from 'moleculer';
 import { generateServiceName, generateActions, generateEvents } from './util';
+import { Moleculer } from './moleculer';
 
 export const ActionMetadataPrefix: string = 'service:action';
 export const EventMetadataPrefix: string = 'service:event';
@@ -25,14 +26,16 @@ type ServiceOptions = {
   name?: string;
 };
 
+type Constructor<T = {}> = new (...args: any[]) => T;
+
 export const service = (options: ServiceOptions = {}) => {
-  return (Service: any) =>
+  return <Service extends Constructor<Moleculer>>(Service: Service) =>
     class extends Service {
-      public constructor(broker: ServiceBroker) {
-        super(broker);
+      public constructor(...args: any[]) {
+        super(...args);
 
         this.parseServiceSchema({
-          name: options.name || this.name || generateServiceName(Service),
+          name: options.name || this.name || generateServiceName(Service.name),
           version: this.version,
           settings: this.settings,
           dependencies: this.dependencies,
