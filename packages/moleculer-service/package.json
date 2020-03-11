@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc --build tsconfig.json --watch"
+    "build": "tsc --build tsconfig.json",
+    "build:watch": "tsc --build tsconfig.json --watch"
   },
   "dependencies": {
     "lodash": "^4.17.15",
