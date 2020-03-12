@@ -7,6 +7,15 @@ export const generateServiceName = (name: string) => {
   return camelCase(name.replace(/(.+)Service/, '$1'));
 };
 
+export const generateHooks = (hooks: Partial<Record<'before' | 'after' | 'error', Function>> = {}) =>
+  Object.entries(hooks).reduce((hooks, [hook, callback]) => {
+    hooks[hook] = {
+      '*': callback,
+    };
+
+    return hooks;
+  }, {});
+
 export const generateActions = (target: Moleculer) =>
   Reflect.getMetadataKeys(target)
     .filter((key: string) => key.startsWith(ActionMetadataPrefix))
