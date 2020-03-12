@@ -19,8 +19,8 @@
     "forceConsistentCasingInFileNames": true,
     "types": ["jest", "node"],
     "baseUrl": ".",
-    "paths": {
-      "*": ["services/*", "packages/*"]
-    }
-  }
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*"]
 }

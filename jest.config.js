@@ -1,17 +1,17 @@
 module.exports = {
   testEnvironment: 'node',
-  moduleFileExtensions: ['ts', 'tsx', 'js'],
+  moduleFileExtensions: ['ts', 'js'],
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
-  testMatch: ['<rootDir>/services/**/tests/**/*.spec.ts', '<rootDir>/services/**/tests/**/*.spec.tsx'],
+  testMatch: ['<rootDir>/tests/**/*.spec.ts'],
   globals: {
     'ts-jest': {
-      tsConfig: 'tsconfig.test.json',
+      tsConfig: '<rootDir>/tests/tsconfig.json',
     },
   },
   reporters: ['default'],
-  collectCoverageFrom: ['<rootDir>/services/**/src/**/*.ts'],
+  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
   coverageThreshold: {
     global: {
       functions: 0,

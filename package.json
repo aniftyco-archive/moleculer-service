@@ -1,6 +1,7 @@
 {
-  "name": "root",
-  "private": true,
+  "name": "moleculer-service",
+  "version": "0.0.0",
+  "main": "dist/index.js",
   "author": {
     "name": "Nifty Development, LLC",
     "email": "support@aniftyco.com",
@@ -13,33 +14,32 @@
     }
   ],
   "scripts": {
-    "start": "ts-node ./node_modules/moleculer/bin/moleculer-runner.js --env --hot services/**/*Service.ts",
     "build": "tsc --build tsconfig.build.json",
-    "prepublishOnly": "lerna run build",
-    "publish": "lerna publish",
     "test": "jest --coverage"
   },
-  "workspaces": [
-    "services/*",
-    "packages/*"
-  ],
+  "dependencies": {
+    "lodash.camelcase": "^4.3.0",
+    "lodash.isstring": "^4.0.1",
+    "reflect-metadata": "^0.1.13"
+  },
   "devDependencies": {
-    "@types/bluebird": "^3.5.30",
     "@types/jest": "^25.1.4",
-    "@types/lodash": "^4.14.149",
+    "@types/lodash.camelcase": "^4.3.6",
+    "@types/lodash.isstring": "^4.0.6",
     "@types/node": "^12.12.29",
     "@typescript-eslint/parser": "^2.23.0",
-    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-nifty": "^3.0.0-rc.8",
     "jest": "^25.1.0",
     "jest-cli": "^25.1.0",
-    "lerna": "^3.20.2",
     "moleculer-cli": "^0.7.0",
     "moleculer-repl": "^0.6.3",
     "prettier": "^1.19.1",
     "ts-jest": "^25.2.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
+  },
+  "peerDependencies": {
+    "moleculer": "^0.14.4"
   }
 }

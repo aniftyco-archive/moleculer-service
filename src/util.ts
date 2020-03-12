@@ -1,7 +1,16 @@
 import 'reflect-metadata';
-import { camelCase } from 'lodash';
+import isString from 'lodash.isstring';
+import camelCase from 'lodash.camelcase';
 import { ActionMetadataPrefix, EventMetadataPrefix } from './decorators';
-import { Moleculer } from './moleculer';
+import { Service } from './service';
+
+export const convertToOptions = (options: string | Record<string, any>, additional: Record<string, any> = {}) => {
+  if (isString(options)) {
+    return { ...additional, name: options };
+  }
+
+  return { ...additional, ...options };
+};
 
 export const generateServiceName = (name: string) => {
   return camelCase(name.replace(/(.+)Service/, '$1'));
@@ -16,13 +25,13 @@ export const generateHooks = (hooks: Partial<Record<'before' | 'after' | 'error'
     return hooks;
   }, {});
 
-export const generateActions = (target: Moleculer) =>
+export const generateActions = (target: Service) =>
   Reflect.getMetadataKeys(target)
     .filter((key: string) => key.startsWith(ActionMetadataPrefix))
     .map((key: string) => Reflect.getMetadata(key, target))
     .reduce((actions, { name, options }) => {
       actions[name] = {
-        name,
+        name: name,
         ...options,
         handler: target[name],
       };
@@ -30,7 +39,7 @@ export const generateActions = (target: Moleculer) =>
       return actions;
     }, {});
 
-export const generateEvents = (target: Moleculer) =>
+export const generateEvents = (target: Service) =>
   Reflect.getMetadataKeys(target)
     .filter((key: string) => key.startsWith(EventMetadataPrefix))
     .map((key: string) => Reflect.getMetadata(key, target))
