@@ -14,7 +14,7 @@
     }
   ],
   "scripts": {
-    "build": "tsc --build tsconfig.build.json",
+    "build": "tsc --build",
     "test": "jest --coverage"
   },
   "dependencies": {
