@@ -37,8 +37,12 @@ export const action = (options: string | ActionOptions = {}) => {
   };
 };
 
-export const event = (options: string | Omit<moleculer.EventSchema, 'handler'>) => {
+export const event = (options?: string | Omit<moleculer.EventSchema, 'handler'>) => {
   return (target: any, key: string, descriptor: PropertyDescriptor) => {
+    if (!options) {
+      throw new TypeError('Event must have a name to listen for');
+    }
+
     Reflect.defineMetadata(`${EventMetadataPrefix}:${key}`, { name: key, options: convertToOptions(options) }, target);
 
     return descriptor;
@@ -60,8 +64,8 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 export const service = (options: string | ServiceOptions = {}) => {
   const opts: ServiceOptions = convertToOptions(options);
 
-  return <S extends Constructor<Service>>(Service: S) =>
-    class extends Service {
+  return <ServiceType extends Constructor<Service>>(Service: ServiceType) => {
+    return (class extends Service {
       public constructor(...args: any[]) {
         super(...args);
 
@@ -80,5 +84,6 @@ export const service = (options: string | ServiceOptions = {}) => {
           stopped: this.stopped as () => Promise<void>,
         });
       }
-    } as any;
+    } as unknown) as Service;
+  };
 };
