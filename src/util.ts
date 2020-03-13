@@ -16,17 +16,18 @@ export const generateServiceName = (name: string) => {
   return camelCase(name.replace(/(.+)Service/, '$1'));
 };
 
-export const generateHooks = (hooks: Partial<Record<'before' | 'after' | 'error', Function>> = {}) =>
-  Object.entries(hooks).reduce((hooks, [hook, callback]) => {
+export const generateHooks = (hooks: Partial<Record<'before' | 'after' | 'error', Function>> = {}) => {
+  return Object.entries(hooks).reduce((hooks, [hook, callback]) => {
     hooks[hook] = {
       '*': callback,
     };
 
     return hooks;
   }, {});
+};
 
-export const generateActions = (target: Service) =>
-  Reflect.getMetadataKeys(target)
+export const generateActions = (target: Service) => {
+  return Reflect.getMetadataKeys(target)
     .filter((key: string) => key.startsWith(ActionMetadataPrefix))
     .map((key: string) => Reflect.getMetadata(key, target))
     .reduce((actions, { name, options }) => {
@@ -38,9 +39,10 @@ export const generateActions = (target: Service) =>
 
       return actions;
     }, {});
+};
 
-export const generateEvents = (target: Service) =>
-  Reflect.getMetadataKeys(target)
+export const generateEvents = (target: Service) => {
+  return Reflect.getMetadataKeys(target)
     .filter((key: string) => key.startsWith(EventMetadataPrefix))
     .map((key: string) => Reflect.getMetadata(key, target))
     .reduce((events, { name, options }) => {
@@ -52,3 +54,4 @@ export const generateEvents = (target: Service) =>
 
       return events;
     }, {});
+};
