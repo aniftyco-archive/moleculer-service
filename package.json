@@ -18,6 +18,9 @@
     "prepublishOnly": "rimraf dist/ && tsc --build",
     "test": "jest --coverage"
   },
+  "files": [
+    "dist/"
+  ],
   "dependencies": {
     "lodash.camelcase": "^4.3.0",
     "lodash.isstring": "^4.0.1",
