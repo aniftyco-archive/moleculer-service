@@ -64,8 +64,8 @@ type Constructor<T = {}> = new (...args: any[]) => T;
 export const service = (options: string | ServiceOptions = {}) => {
   const opts: ServiceOptions = convertToOptions(options);
 
-  return <ServiceType extends Constructor<Service>>(Service: ServiceType) => {
-    return (class extends Service {
+  return (MoleculerService: Constructor<Service>): any => {
+    return class MixedInService extends MoleculerService {
       public constructor(...args: any[]) {
         super(...args);
 
@@ -84,6 +84,6 @@ export const service = (options: string | ServiceOptions = {}) => {
           stopped: this.stopped as () => Promise<void>,
         });
       }
-    } as unknown) as Service;
+    };
   };
 };
