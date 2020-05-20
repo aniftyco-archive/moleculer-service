@@ -5,7 +5,7 @@ TypeScript decorators for [Moleculer](https://moleculer.services).
 ## Install
 
 ```shell
-$ yarn add moleculer-service
+$ npm install moleculer-service
 ```
 
 ## Example
