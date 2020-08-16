@@ -1,10 +1,12 @@
 import 'reflect-metadata';
-import isString from 'lodash.isstring';
-import camelCase from 'lodash.camelcase';
+import { isString, camelCase } from 'lodash';
 import { ActionMetadataPrefix, EventMetadataPrefix } from './decorators';
 import { Service } from './service';
 
-export const convertToOptions = (options: string | Record<string, any>, additional: Record<string, any> = {}) => {
+export const convertToOptions = (
+  options: string | Record<string, any>,
+  additional: Record<string, any> = {}
+) => {
   if (isString(options)) {
     return { ...additional, name: options };
   }
@@ -16,7 +18,9 @@ export const generateServiceName = (name: string) => {
   return camelCase(name.replace(/(.+)Service/, '$1'));
 };
 
-export const generateHooks = (hooks: Partial<Record<'before' | 'after' | 'error', Function>> = {}) => {
+export const generateHooks = (
+  hooks: Partial<Record<'before' | 'after' | 'error', Function>> = {}
+) => {
   return Object.entries(hooks).reduce((hooks, [hook, callback]) => {
     hooks[hook] = {
       '*': callback,
@@ -26,7 +30,7 @@ export const generateHooks = (hooks: Partial<Record<'before' | 'after' | 'error'
   }, {});
 };
 
-export const generateActions = (target: Service) => {
+export const generateActions = (target: any) => {
   return Reflect.getMetadataKeys(target)
     .filter((key: string) => key.startsWith(ActionMetadataPrefix))
     .map((key: string) => Reflect.getMetadata(key, target))
@@ -41,7 +45,7 @@ export const generateActions = (target: Service) => {
     }, {});
 };
 
-export const generateEvents = (target: Service) => {
+export const generateEvents = (target: any) => {
   return Reflect.getMetadataKeys(target)
     .filter((key: string) => key.startsWith(EventMetadataPrefix))
     .map((key: string) => Reflect.getMetadata(key, target))
@@ -54,4 +58,10 @@ export const generateEvents = (target: Service) => {
 
       return events;
     }, {});
+};
+
+export const isServiceClass = (constructor: any) => {
+  return (
+    typeof constructor === 'function' && Service.isPrototypeOf(constructor)
+  );
 };

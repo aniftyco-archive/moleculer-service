@@ -1,7 +1,7 @@
 {
   "name": "moleculer-service",
   "version": "0.1.1",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "author": {
     "name": "Nifty Development, LLC",
     "email": "support@aniftyco.com",
@@ -14,37 +14,78 @@
     }
   ],
   "scripts": {
-    "build": "tsc --build",
-    "prepublishOnly": "rimraf dist/ && tsc --build",
-    "test": "jest --coverage"
+    "prepublishOnly": "rimraf lib && tsc",
+    "build": "tsc",
+    "test": "jest"
   },
   "files": [
-    "dist/"
+    "lib/"
   ],
+  "eslintConfig": {
+    "extends": "nifty",
+    "rules": {
+      "no-restricted-globals": 0,
+      "@typescript-eslint/ban-ts-ignore": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "@typescript-eslint/no-var-requires": 0,
+      "@typescript-eslint/no-empty-interface": 0,
+      "@typescript-eslint/no-non-null-assertion": 0
+    }
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testMatch": [
+      "<rootDir>/tests/**/*.spec.ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tests/tsconfig.json"
+      }
+    },
+    "reporters": [
+      "default"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "functions": 0,
+        "branches": 0,
+        "lines": 0
+      }
+    }
+  },
   "dependencies": {
-    "lodash.camelcase": "^4.3.0",
-    "lodash.isstring": "^4.0.1",
+    "lodash": "^4.17.20",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
-    "@types/jest": "^25.1.4",
-    "@types/lodash.camelcase": "^4.3.6",
-    "@types/lodash.isstring": "^4.0.6",
-    "@types/node": "^12.12.29",
-    "@typescript-eslint/parser": "^2.23.0",
-    "eslint": "^6.8.0",
+    "@types/jest": "^26.0.10",
+    "@types/lodash": "^4.14.159",
+    "@types/node": "^14.0.27",
+    "eslint": "^7.7.0",
     "eslint-config-nifty": "^3.0.0-rc.8",
-    "jest": "^25.1.0",
-    "jest-cli": "^25.1.0",
-    "moleculer-cli": "^0.7.0",
-    "moleculer-repl": "^0.6.3",
-    "prettier": "^1.19.1",
+    "jest": "^26.4.0",
+    "moleculer": "^0.14.9",
+    "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
-    "ts-jest": "^25.2.1",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.9.3"
+    "ts-jest": "^26.2.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   },
   "peerDependencies": {
-    "moleculer": "^0.14.4"
+    "moleculer": "*"
   }
 }
