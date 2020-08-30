@@ -125,7 +125,12 @@ export const service = (
     const ServiceClass = class extends constructor {
       constructor(...args: any[]) {
         super(...args);
-        (this as any).parseServiceSchema(schema);
+        (this as any).parseServiceSchema({
+          ...schema,
+          created: (this as any).created.bind(this),
+          started: (this as any).started.bind(this),
+          stopped: (this as any).stopped.bind(this),
+        });
       }
     };
 
