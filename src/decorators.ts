@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import {
-  Service as MoleculerService,
   Context,
   ActionVisibility,
   ActionParams,
@@ -127,9 +126,9 @@ export const service = (
         super(...args);
         (this as any).parseServiceSchema({
           ...schema,
-          created: (this as any).created.bind(this),
-          started: (this as any).started.bind(this),
-          stopped: (this as any).stopped.bind(this),
+          created: (this as any).created,
+          started: (this as any).started,
+          stopped: (this as any).stopped,
         });
       }
     };
@@ -138,7 +137,7 @@ export const service = (
       value: constructor.name,
     });
 
-    Object.setPrototypeOf(ServiceClass, MoleculerService);
+    Object.setPrototypeOf(ServiceClass, constructor);
 
     return ServiceClass;
   };

@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import { isString, camelCase } from 'lodash';
 import { ActionMetadataPrefix, EventMetadataPrefix } from './decorators';
-import { Service } from './service';
 
 export const convertToOptions = (
   options: string | Record<string, any>,
@@ -58,10 +57,4 @@ export const generateEvents = (target: any) => {
 
       return events;
     }, {});
-};
-
-export const isServiceClass = (constructor: any) => {
-  return (
-    typeof constructor === 'function' && Service.isPrototypeOf(constructor)
-  );
 };

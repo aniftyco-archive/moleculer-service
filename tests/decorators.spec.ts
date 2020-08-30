@@ -14,7 +14,7 @@ describe('moleculer-service', () => {
     beforeAll(() => broker.start());
     afterAll(() => broker.stop());
 
-    it.only('should not blowup', async () => {
+    it('should not blowup', async () => {
       broker.createService(FooService);
 
       await broker.waitForServices('foo');
